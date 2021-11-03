@@ -45,7 +45,7 @@ view: choco {
   }
 
   dimension: review_date {
-    type: date_year
+    type: number
     sql: ${TABLE}.ReviewDate ;;
     description: "Date of publication of the review."
   }
