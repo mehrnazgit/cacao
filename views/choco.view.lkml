@@ -1,5 +1,5 @@
 view: choco {
-  sql_table_name: `demo_dataset.choco`
+  sql_table_name: `demo_dataset.chocolate`
     ;;
 
   dimension: bean_type {
@@ -26,10 +26,32 @@ view: choco {
     description: "Name of the company manufacturing the bar."
   }
 
+  dimension: countries {
+    hidden: no
+    map_layer_name: countries
+    sql: REPLACE(${TABLE}.CompanyLocation, 'Amsterdam', 'Netherlands')  ;;
+    description: "Name of the company manufacturing the bar."
+  }
+
+
   dimension: company_location {
-    type: string
-    sql: ${TABLE}.CompanyLocation ;;
+    map_layer_name: countries
+    sql: LOWER(${countries}) ;;
     description: "Manufacturer base country."
+    html:
+    {% if value == 'u.s.a.' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/united-states-of-america-flag-png-large.png" height=20 width=30 /> {{rendered_value}}
+    {% elsif value == 'u.k.' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/united-kingdom-flag-png-large.png" height=20 width=30 /> {{rendered_value}}
+    {% elsif value == 'australia' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-9-scaled.jpg" height=20 width=30 /> {{rendered_value}}
+    {% elsif value == 'new zealand' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/new-zealand-flag-png-large.png" height=20 width=30 /> {{rendered_value}}
+    {% elsif value == 'belgium' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-18-scaled.jpg" height=20 width=30 /> {{rendered_value}}
+    {% else %}
+      <img src="https://www.countryflags.com/wp-content/uploads/{{value}}-flag-png-large.png" height=20 width=30 /> {{rendered_value}}
+    {% endif %};;
   }
 
   dimension: rating {
@@ -44,10 +66,11 @@ view: choco {
     description: "A value linked to when the review was entered in the database. Higher = more recent."
   }
 
-  dimension: review_date {
-    type: number
+  dimension_group: review_date {
+    type: time
+    timeframes: [year, month, date]
     sql: ${TABLE}.ReviewDate ;;
-    description: "Date of publication of the review."
+    description: "Year of publication of the review."
   }
 
   dimension: specific_bean_origin {
@@ -65,5 +88,19 @@ view: choco {
   measure: count {
     type: count
     drill_fields: []
+  }
+
+  measure: company_count {
+    type: count_distinct
+    sql: ${company} ;;
+    drill_fields: [company]
+    description: "distinct count of companies."
+    label: "Distinct Count of Companies"
+  }
+
+  measure: average_rating{
+    type: average
+    sql: ${rating} ;;
+    description: "average rate."
   }
 }
