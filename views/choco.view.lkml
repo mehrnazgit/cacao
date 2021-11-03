@@ -56,6 +56,12 @@ view: choco {
     description: "The specific geo-region of origin for the bar."
   }
 
+  dimension: image {
+    type: string
+    sql: ${TABLE}.BeanType;;
+    html: <img src="https://images.unsplash.com/photo-1553452118-621e1f860f43?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGNob2NvbGF0ZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60" height = "500" width = "300" />;;
+  }
+
   measure: count {
     type: count
     drill_fields: []
