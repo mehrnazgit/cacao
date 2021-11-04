@@ -12,6 +12,12 @@ persist_with: cacao_default_datagroup
 
 explore: choco {}
 
-explore: salesperson {}
+explore: salesperson {
+  join: orders {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${salesperson.id} = ${orders.sales_person_id} ;;
+  }
+}
 
 explore: orders {}

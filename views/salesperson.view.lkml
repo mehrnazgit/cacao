@@ -33,13 +33,20 @@ view: salesperson {
   }
 
   dimension: first_name {
+    hidden: yes
     type: string
     sql: ${TABLE}.Firstname ;;
   }
 
   dimension: last_name {
+    hidden: yes
     type: string
     sql: ${TABLE}.Lastname ;;
+  }
+
+  dimension: full_name {
+    type: string
+    sql: ${first_name} + " " + ${last_name} ;;
   }
 
   dimension_group: birth {
@@ -56,6 +63,11 @@ view: salesperson {
   dimension: country {
     type: string
     sql: ${TABLE}.Country ;;
+  }
+
+  measure: count {
+    type: count
+    drill_fields: []
   }
 
 }
