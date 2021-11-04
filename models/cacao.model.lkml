@@ -11,3 +11,7 @@ datagroup: cacao_default_datagroup {
 persist_with: cacao_default_datagroup
 
 explore: choco {}
+
+explore: salesperson {}
+
+explore: orders {}
