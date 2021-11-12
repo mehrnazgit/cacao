@@ -3,6 +3,7 @@ view: salesperson {
   sql_table_name: `demo_dataset.salesperson` ;;
 
   dimension: id {
+    primary_key: yes
     type: string
     sql: ${TABLE}.ID ;;
   }
@@ -46,7 +47,7 @@ view: salesperson {
 
   dimension: full_name {
     type: string
-    sql: ${first_name} + " " + ${last_name} ;;
+    sql: CONCAT(${first_name}, " ", ${last_name}) ;;
   }
 
   dimension_group: birth {

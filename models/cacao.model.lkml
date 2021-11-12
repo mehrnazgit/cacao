@@ -10,14 +10,28 @@ datagroup: cacao_default_datagroup {
 
 persist_with: cacao_default_datagroup
 
-explore: choco {}
-
-explore: salesperson {
-  join: orders {
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${salesperson.id} = ${orders.sales_person_id} ;;
-  }
+explore: choco {
+  hidden: no
 }
 
-explore: orders {}
+explore: salesperson {
+  hidden: yes
+}
+
+explore: orders {
+  hidden: yes
+  join: salesperson {
+    type: full_outer
+    relationship: many_to_one
+    sql_on: ${orders.sales_person_id} = ${salesperson.id} ;;
+  }
+  join: chocolate_products {
+    type: full_outer
+    relationship: many_to_one
+    sql_on: ${orders.product_id} = ${chocolate_products.product_id} ;;
+  }
+  label: "Chocolate Orders"
+}
+explore: chocolate_products{
+  hidden: yes
+}

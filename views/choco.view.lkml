@@ -24,33 +24,75 @@ view: choco {
     type: string
     sql: ${TABLE}.Company ;;
     description: "Name of the company manufacturing the bar."
+    html:
+    {% if value == 'Alexandre' %}
+      <img src="http://img1.wsimg.com/isteam/ip/95960f1f-c6bd-4841-94fc-4cded1e80acc/Head%20Image.jpg" height=150 width=150 />
+    {% elsif value == 'Chocolate Makers' %}
+      <img src="https://chocoladeverkopers.nl/chocolade/wp-content/uploads/2016/06/chocolatemakers-amsterdam-chocolade-logo-380x250.jpg" height=125 width=150 />
+    {% elsif value == 'Metropolitan' %}
+      <img src="https://lh3.googleusercontent.com/0CVjGQLe3jkkjwi_0_AM2L6CbxU8quNGQcUJkQD0IqQNngMo9v1D8kfnqviol4C8hPzZi7sk8y6fATqVsNCd0cqt1out9tEtpOP6aCA6ssi8TeA3zA4Pubyiyo6tpZG7Lp3CM8rrtGkiOoyHRb9EavrkB_C3il8kK6RNUGHH9IxuTAFAJEHnciSIEsfJyb3VzeuWk6ja1aEX2xSIfLPfolxJXQt7_sf3-NF4UTq9jjFfE3ceRGSOfkuglw1NlCuY2QA1V8eUUmJCjNYKoiPMJ7v1T0BslndLOAbdo3spNZKTJv-T_UbfaYKHFGBmntczoeYIJbieCGy4HQxh9BqsAemkUHiOG3J9WPvAKii8nQ3U4Y38zCB6oGa8zIceIvMXxJVYbjjiRNq3PHfzSqYG-IISWxT_Xx0N_GhK1FiUKQpPG8KpDoiUCiJoaFURAk62rU5JeCNLnOmtyuUMZK3XYInqbja9fhe2X97GuDzMjgpaL0Q7R3nT6Zloqxddq9QCy-hddNoVTBxvOvP4Yo-YlTLGw_HVAapqyZGr1ulQSmXyucFa684ELogRuQSryhjpJLw8lDPHVHddii8W8MtMBjUWBQb2D35u3D6mYcg9kzv7piOIVBjiVsbl2RwgHw2ZpdynzX_2bvwZvrJmheiBGgrosFgLdKltqQuTfQr_ZZR8_7TIJacx06lXXw2MxbDyWBXGD8F-csSkVeCqyFDBzg=w389-h212-no?authuser=0" height=125 width=150 />
+    {% endif %};;
   }
 
   dimension: countries {
-    hidden: no
+    hidden: yes
     map_layer_name: countries
-    sql: REPLACE(${TABLE}.CompanyLocation, 'Amsterdam', 'Netherlands')  ;;
+    sql: REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(${TABLE}.CompanyLocation, 'Amsterdam', 'Netherlands'), 'Eucador', 'Ecuador'), 'U.S.A.', 'America'), 'U.K.', 'England'), 'Niacragua', 'Nicaragua')  ;;
     description: "Name of the company manufacturing the bar."
   }
-
 
   dimension: company_location {
     map_layer_name: countries
     sql: LOWER(${countries}) ;;
     description: "Manufacturer base country."
+    drill_fields: [company]
     html:
-    {% if value == 'u.s.a.' %}
-      <img src="https://www.countryflags.com/wp-content/uploads/united-states-of-america-flag-png-large.png" height=20 width=30 /> {{rendered_value}}
-    {% elsif value == 'u.k.' %}
-      <img src="https://www.countryflags.com/wp-content/uploads/united-kingdom-flag-png-large.png" height=20 width=30 /> {{rendered_value}}
+    {% if value == 'america' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/united-states-of-america-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'england' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/united-kingdom-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
     {% elsif value == 'australia' %}
-      <img src="https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-9-scaled.jpg" height=20 width=30 /> {{rendered_value}}
+      <img src="https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-9-scaled.jpg" height=20 width=30 /> {{rendered_value|capitalize}}
     {% elsif value == 'new zealand' %}
-      <img src="https://www.countryflags.com/wp-content/uploads/new-zealand-flag-png-large.png" height=20 width=30 /> {{rendered_value}}
+      <img src="https://www.countryflags.com/wp-content/uploads/new-zealand-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
     {% elsif value == 'belgium' %}
-      <img src="https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-18-scaled.jpg" height=20 width=30 /> {{rendered_value}}
+      <img src="https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-18-scaled.jpg" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'scotland' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/scotland-flag-jpg-xl.jpg" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'puerto rico' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/puerto-rico-flag-jpg-xl.jpg" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'austria' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/austria-austrian-flag-png-square-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'costa rica' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/costa-rica-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'south korea' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/south-korea-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'argentina' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-7-scaled.jpg" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'domincan republic' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/dominican-republic-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'south africa' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/south-africa-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'sao tome' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/sao-tome-and-principe-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'wales' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/wales-flag-jpg-xl.jpg" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'bolivia' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-scaled.jpg" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'nicaragua' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/nicaragua-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'portugal' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/portugal-flag-400.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'st. lucia' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/saint-lucia-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'ecuador' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/ecuador-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'czech republic' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/czech-republic-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
+    {% elsif value == 'martinique' %}
+      <img src="https://www.countryflags.com/wp-content/uploads/france-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
     {% else %}
-      <img src="https://www.countryflags.com/wp-content/uploads/{{value}}-flag-png-large.png" height=20 width=30 /> {{rendered_value}}
+      <img src="https://www.countryflags.com/wp-content/uploads/{{value}}-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
     {% endif %};;
   }
 

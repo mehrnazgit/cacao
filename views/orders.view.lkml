@@ -2,6 +2,7 @@ view: orders {
   sql_table_name: `demo_dataset.orders` ;;
 
   dimension: order_number {
+    primary_key: yes
     type: string
     sql: ${TABLE}.Ordernumber ;;
   }
