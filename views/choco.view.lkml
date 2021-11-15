@@ -8,16 +8,34 @@ view: choco {
     description: "The variety (breed) of bean used, if provided."
   }
 
+  measure: bean_type_count {
+    type: count_distinct
+    sql: ${bean_type} ;;
+    drill_fields: [specific_bean_origin, company_count ,average_cocoa_percent, average_rating]
+  }
+
   dimension: broad_bean_origin {
     type: string
     sql: ${TABLE}.BroadBeanOrigin ;;
     description: "The broad geo-region of origin for the bean."
   }
 
+  measure: bean_origin_count {
+    type: count_distinct
+    sql: ${broad_bean_origin} ;;
+  }
+
+
   dimension: cocoa_percent {
     type: number
     sql: ${TABLE}.CocoaPercent ;;
     description: "Cocoa percentage (darkness) of the chocolate bar being reviewed"
+  }
+
+  measure: average_cocoa_percent {
+    type: average
+    value_format: "0.00%"
+    sql: ${cocoa_percent} ;;
   }
 
   dimension: company {
@@ -45,7 +63,8 @@ view: choco {
     map_layer_name: countries
     sql: LOWER(${countries}) ;;
     description: "Manufacturer base country."
-    drill_fields: [company]
+    drill_fields: [company, company_count, average_rating]
+    label: "Country"
     html:
     {% if value == 'america' %}
       <img src="https://www.countryflags.com/wp-content/uploads/united-states-of-america-flag-png-large.png" height=20 width=30 /> {{rendered_value|capitalize}}
@@ -141,14 +160,24 @@ view: choco {
   measure: company_count {
     type: count_distinct
     sql: ${company} ;;
-    drill_fields: [company]
+    drill_fields: [company, bean_origin_count, average_rating]
     description: "distinct count of companies."
     label: "Distinct Count of Companies"
   }
 
   measure: average_rating{
     type: average
-    sql: ${rating} ;;
+    value_format: "0.0"
+    sql: round(${rating}) ;;
+    html:
+    {% for i in (1..5) %}
+    {% if i > value %}
+      ★
+    {% else %}
+      <font color="orange">★</font>
+    {% endif %}
+    {% endfor %} ;;
     description: "average rate."
+    label: "Average Rate"
   }
 }
