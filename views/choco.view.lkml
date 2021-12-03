@@ -18,6 +18,50 @@ view: choco {
     type: string
     sql: ${TABLE}.BroadBeanOrigin ;;
     description: "The broad geo-region of origin for the bean."
+    action: {
+
+      label: "Cool Name?"
+
+      url: "https://us-central1-custom-bond-330812.cloudfunctions.net/cool_name_function"
+
+
+
+      param: {
+
+        name: "name"
+
+        value: "{{ value }}"
+
+      }
+
+      form_param: {
+
+        name: "annotation"
+
+        type: select
+
+        label: "Cool name?"
+
+        default: "No"
+
+        description: "Do you think that this name is a cool name?"
+
+        option: {
+
+          name: "No"
+
+        }
+
+        option: {
+
+          name: "Yes"
+
+        }
+
+      }
+
+    }
+
   }
 
   measure: bean_origin_count {
@@ -166,6 +210,13 @@ view: choco {
     {% endif %}
     {% endfor %} ;;
     description: "average rate."
-    label: "Average Rate"
+    label: "Average Rating"
   }
+
+  dimension: review_year{
+    type: date_year
+    sql: ${TABLE}.ReviewDate ;;
+    description: "Year of publication of the review.(This dimension is for the purpose of Embedding Analysis)"
+  }
+
 }
